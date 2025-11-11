@@ -1,5 +1,5 @@
 const STORAGE_KEY = 'cinema-seat-map-v1';
-const ADMIN_PASSWORD = 'organizer2024';
+const ADMIN_PASSWORD = 'david03';
 const DEFAULT_ROWS = 6;
 const DEFAULT_SEATS_PER_ROW = 10;
 
