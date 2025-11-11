@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="ru">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Управление посадкой — Кинозал</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <header class="page-header">
+      <div class="page-header__inner">
+        <h1 class="page-title">Управление посадкой в кинозале</h1>
+        <p class="page-subtitle">
+          Настройте схему зала, обновляйте статусы мест и делитесь актуальной
+          рассадкой с командой.
+        </p>
+      </div>
+    </header>
+
+    <main class="layout">
+      <section class="panel panel--admin">
+        <div class="panel__section">
+          <h2 class="panel__title">Режим организатора</h2>
+          <form id="admin-form" class="form form--inline" autocomplete="off">
+            <label class="form__field">
+              <span class="form__label">Пароль</span>
+              <input
+                id="admin-password"
+                type="password"
+                name="password"
+                class="input"
+                placeholder="Введите пароль"
+                required
+              />
+            </label>
+            <button type="submit" class="button">Войти</button>
+            <button type="button" id="admin-logout" class="button button--ghost">
+              Выйти
+            </button>
+          </form>
+          <p id="admin-status" class="panel__hint">Доступ закрыт. Вы в режиме просмотра.</p>
+        </div>
+
+        <div class="panel__section" id="settings-section">
+          <h2 class="panel__title">Настройка зала</h2>
+          <form id="settings-form" class="form" autocomplete="off">
+            <label class="form__field">
+              <span class="form__label">Количество рядов</span>
+              <input
+                id="rows-input"
+                type="number"
+                min="1"
+                max="50"
+                class="input"
+                placeholder="Например, 8"
+              />
+            </label>
+
+            <label class="form__field">
+              <span class="form__label">
+                Места в каждом ряду
+                <span class="form__label-hint">Одно число или список через запятую</span>
+              </span>
+              <input
+                id="seats-pattern-input"
+                type="text"
+                class="input"
+                placeholder="Например, 10 или 8,10,10,8"
+              />
+            </label>
+
+            <div class="form__actions">
+              <button type="submit" class="button button--primary">Обновить схему</button>
+            </div>
+          </form>
+        </div>
+
+        <div class="panel__section panel__section--legend">
+          <h2 class="panel__title">Легенда</h2>
+          <ul class="legend">
+            <li class="legend__item">
+              <span class="legend__swatch legend__swatch--available"></span>
+              Свободно
+            </li>
+            <li class="legend__item">
+              <span class="legend__swatch legend__swatch--occupied"></span>
+              Занято
+            </li>
+          </ul>
+        </div>
+      </section>
+
+      <section class="panel panel--seats">
+        <header class="panel__header">
+          <h2 class="panel__title">Схема зала</h2>
+          <p class="panel__hint">
+            Ряды нумеруются сверху вниз, места — слева направо. Нажмите на место в режиме
+            организатора, чтобы изменить статус и текст.
+          </p>
+        </header>
+        <div id="seat-grid" class="seat-grid" role="grid" aria-live="polite"></div>
+      </section>
+    </main>
+
+    <dialog id="seat-modal" class="seat-modal">
+      <form method="dialog" class="seat-modal__form" id="seat-modal-form">
+        <h3 class="seat-modal__title">Настройки места</h3>
+        <p class="seat-modal__subtitle" id="seat-modal-position"></p>
+
+        <fieldset class="form__field seat-modal__field">
+          <legend class="form__label">Статус</legend>
+          <label class="radio">
+            <input type="radio" name="seat-status" value="available" checked />
+            <span>Свободно</span>
+          </label>
+          <label class="radio">
+            <input type="radio" name="seat-status" value="occupied" />
+            <span>Занято</span>
+          </label>
+        </fieldset>
+
+        <label class="form__field seat-modal__field">
+          <span class="form__label">Текст в ячейке</span>
+          <textarea
+            id="seat-modal-text"
+            class="input input--textarea"
+            rows="3"
+            placeholder="Например: VIP или Имя гостя"
+          ></textarea>
+        </label>
+
+        <div class="seat-modal__actions">
+          <button type="submit" class="button button--primary">Сохранить</button>
+          <button type="button" class="button" id="seat-modal-reset">Очистить</button>
+          <button type="button" class="button button--ghost" id="seat-modal-cancel">Отмена</button>
+        </div>
+      </form>
+    </dialog>
+
+    <template id="seat-template">
+      <button type="button" class="seat" role="gridcell"></button>
+    </template>
+
+    <script src="app.js" defer></script>
+  </body>
+</html>
